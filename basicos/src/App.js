@@ -46,7 +46,7 @@ const App = () => {
       {/* <FlexBox2/> */}
       {/* <FlexBox3/> */}
       {/* <FlexBox4></FlexBox4> */}
-      <Mega qtdeNum={2}/>
+      <Mega qtdeNum={0}/>
     </View>
   );
 };
@@ -55,7 +55,7 @@ export default App;
 
 const style = StyleSheet.create({
   App: {
-    backgroundColor: '#aaa',
+    backgroundColor: '#91e3db',
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',

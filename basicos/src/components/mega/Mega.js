@@ -37,9 +37,9 @@ export default class Mega extends Component {
   render() {
     return (
       <>
-        <Text style={estilo.txtG}>Gerador Mega-Sena = {this.state.qtdeNum}</Text>
+        <Text style={[estilo.txtG, style.title]}>Gerador Tele-Sena</Text>
         <TextInput
-          style={{borderBottomWidth: 1}}
+          style={style.input}
           keyboardType={'numeric'} //Deixa o teclado numerico
           placeholder='Digite um Numero' // texto no campo vazio
           value={String(this.state.qtdeNum)}
@@ -63,7 +63,19 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginTop: 20,
-    justifyContent: 'center'
-    
+    justifyContent: 'center',    
+  },
+  title: {
+    textAlign: 'center',
+    fontSize: 70
+  }, 
+  input: {
+    fontSize: 30,
+    borderBottomWidth: 1,
+    textAlign: 'center',
+    width: 80,
+    marginBottom: 30
+
   }
+
 })
