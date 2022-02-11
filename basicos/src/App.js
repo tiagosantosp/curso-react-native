@@ -1,8 +1,10 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import FlexBox3 from './components/layout/FlexBox3';
+import Mega from './components/mega/Mega';
 
+// import FlexBox4 from './components/layout/FlexBox4';
+// import FlexBox3 from './components/layout/FlexBox3';
 // import FlexBox2 from './components/layout/FlexBox2';
 // import FlexBox1 from './components/layout/FlexBox';
 // import Quadrado from './components/layout/Quadrado';
@@ -42,7 +44,9 @@ const App = () => {
       {/* <DigiteSeuNome></DigiteSeuNome> */}
       {/* <FlexBox1/> */}
       {/* <FlexBox2/> */}
-      <FlexBox3/>
+      {/* <FlexBox3/> */}
+      {/* <FlexBox4></FlexBox4> */}
+      <Mega qtdeNum={2}/>
     </View>
   );
 };
