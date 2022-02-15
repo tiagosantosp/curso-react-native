@@ -1,112 +1,111 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, { Component, useState,} from 'react';
+import {  SafeAreaView,  StyleSheet,  View,} from 'react-native';
+import Button from './src/components/Button';
+import Display from './src/components/Display';
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+const initialState = {
+  displayValue: '0',
+  clearDisplay: false,
+  operation: null,
+  values: [0,0],
+  current: 0
+}
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const App = () => {
+  const [displayValue, setDisplayValue] = useState('0')
+  const [clearDisplay, setClearDisplay] = useState(false)
+  const [operation, setarOperations] = useState(null)
+  const [values, setValues] = useState([0,0])
+  const [current, setCurrent] = useState(0)
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+  
+
+  addDigit = n => {
+    const limparTela = displayValue === '0' || clearDisplay
+    
+    if (n === '.' && !limparTela && displayValue.includes('.')) return;
+    
+    const valorAtual = limparTela ? '' : displayValue 
+    const valorTela = valorAtual + n
+    setDisplayValue(valorTela) 
+    setClearDisplay(false)
+
+    if (n !== '.') {
+      const novoValor = parseFloat(valorTela)
+      const valores = [...values]
+      valores[current] = novoValor
+      setValues(valores)
+    }
+  }
+ 
+  clearMemory = () => {
+    setDisplayValue(initialState.displayValue)
+    setClearDisplay(initialState.clearDisplay)
+    setarOperations(initialState.operation)
+    setValues(initialState.values)
+    setCurrent(initialState.current)
+  }
+
+  setOperation = operador => {
+    if (current === 0) {
+      setarOperations(operador)
+      setCurrent(1)
+      setClearDisplay(true)
+    } else {
+      const equals = operador === '='
+      const valores = [...values]
+      try{
+        valores[0] = eval(`${valores[0]} ${operation} ${valores[1]}`)
+      } catch (e) {
+        valores[0] = values[0]
+      }
+
+      valores[1] = 0
+      setDisplayValue(`${valores[0]}`)
+      setarOperations(equals ? null : operador)
+      setCurrent(equals ? 0 : 1)
+      // setClearDisplay(!equals)
+      setClearDisplay(true)
+      setValues(valores)
+
+    }
+  }
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+  <SafeAreaView style={styles.container}>
+      <Display value={displayValue}/>
+      <View style={styles.button}>
+        <Button label='AC' ac triple onClick={clearMemory}/>  
+        <Button label='/' operation onClick={setOperation}/>  
+        <Button label='7' onClick={addDigit}/>  
+        <Button label='8' onClick={addDigit}/>  
+        <Button label='9' onClick={addDigit}/>  
+        <Button label='*' operation onClick={setOperation}/>  
+        <Button label='4' onClick={addDigit}/>     
+        <Button label='5' onClick={addDigit}/>    
+        <Button label='6' onClick={addDigit}/>    
+        <Button label='-' operation onClick={setOperation}/>  
+        <Button label='1' onClick={addDigit}/>    
+        <Button label='2' onClick={addDigit}/>    
+        <Button label='3' onClick={addDigit}/>    
+        <Button label='+' operation onClick={setOperation}/>  
+        <Button label='0' double onClick={addDigit}/>
+        <Button label='.' onClick={addDigit}/>  
+        <Button label='=' operation onClick={setOperation}/>  
+      </View>
     </SafeAreaView>
-  );
+  )
 };
+
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+  button: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+
+  }
 });
 
 export default App;
