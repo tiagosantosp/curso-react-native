@@ -11,6 +11,8 @@ const initialState = {
   current: 0
 }
 
+
+
 const App = () => {
   const [displayValue, setDisplayValue] = useState('0')
   const [clearDisplay, setClearDisplay] = useState(false)
@@ -19,7 +21,7 @@ const App = () => {
   const [current, setCurrent] = useState(0)
 
   
-
+  // ADICIONAR DIGITOS AO VISOR DA CALCULADORA
   addDigit = n => {
     const limparTela = displayValue === '0' || clearDisplay
     
@@ -37,7 +39,8 @@ const App = () => {
       setValues(valores)
     }
   }
- 
+
+  // LIMPAR CALCULADORA "AC"
   clearMemory = () => {
     setDisplayValue(initialState.displayValue)
     setClearDisplay(initialState.clearDisplay)
@@ -46,6 +49,7 @@ const App = () => {
     setCurrent(initialState.current)
   }
 
+  // SETAR UM OPERADOR
   setOperation = operador => {
     if (current === 0) {
       setarOperations(operador)
@@ -70,6 +74,7 @@ const App = () => {
 
     }
   }
+  
   return (
   <SafeAreaView style={styles.container}>
       <Display value={displayValue}/>
