@@ -1,14 +1,16 @@
-import { Box, Text } from "native-base"
+import { View, Text } from "react-native"
 
 
 interface IProps {
-  children: React.Component
+  children?: string
+  corFundo?: string
+  corTexto?: string
 }
 
-export default (props: IProps)  => {
+export default (props:any)  => {
   return(
-    <Box>
-      <Text>{props.children}</Text>
-    </Box>
+    <View style={{flex:1, justifyContent : 'center', alignItems: 'center', backgroundColor: props.corFundo || '#000'}}  >
+      <Text style={{fontSize: 50}}>{props.children}</Text>
+    </View>
   )
 }
